@@ -24,4 +24,4 @@ cd backend
 python -m venv venv  # 創建虛擬環境
 venv\Scripts\activate  # Windows
 pip install -r requirements.txt  # 安裝依賴
-
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload

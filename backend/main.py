@@ -1,18 +1,22 @@
 from fastapi import FastAPI
-import psycopg2
 
 app = FastAPI()
 
-# 連接 PostgreSQL
-conn = psycopg2.connect(database="blockchain_db", user="user", password="password", host="localhost", port="5432")
+# 模擬交易數據
+mock_transactions = [
+    {"id": 1, "sender": "0x123", "receiver": "0x456", "amount": 50, "timestamp": "2025-03-20T12:00:00Z"},
+    {"id": 2, "sender": "0x456", "receiver": "0x789", "amount": 100, "timestamp": "2025-03-20T13:00:00Z"},
+    {"id": 3, "sender": "0x123", "receiver": "0x789", "amount": 200, "timestamp": "2025-03-20T14:00:00Z"},
+]
 
+# 測試 API（回傳假交易數據）
 @app.get("/transactions/{wallet}")
 def get_transactions(wallet: str):
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM transactions WHERE sender = %s OR receiver = %s", (wallet, wallet))
-    return {"wallet": wallet, "transactions": cur.fetchall()}
+    filtered_transactions = [tx for tx in mock_transactions if tx["sender"] == wallet or tx["receiver"] == wallet]
+    return {"wallet": wallet, "transactions": filtered_transactions}
 
-# 測試 API
+# API 偵測（測試後端是否運行）
 @app.get("/")
 def read_root():
-    return {"message": "FastAPI 後端已啟動 🚀"}
+    return {"message": "FastAPI 伺服器正在運行 🚀"}
+
