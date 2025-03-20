@@ -1,6 +1,15 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # ⚠️ 測試環境允許所有來源
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 模擬交易數據
 mock_transactions = [
@@ -19,4 +28,5 @@ def get_transactions(wallet: str):
 @app.get("/")
 def read_root():
     return {"message": "FastAPI 伺服器正在運行 🚀"}
+
 
