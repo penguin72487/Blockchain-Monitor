@@ -32,3 +32,17 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 cd backend
 venv\Scripts\activate 
 pip freeze > requirements.txt
+
+
+
+# 建制後 quick start
+
+cd backend
+venv\Scripts\activate 
+pip install -r requirements.txt 
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+
+cd frontend
+npm install  
+npm run dev
